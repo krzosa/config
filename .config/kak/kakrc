@@ -1,8 +1,10 @@
 colorscheme gruvbox
 set global tabstop     2
 set global indentwidth 2
+
 hook global NormalKey <ret> w
 hook global NormalKey <c-q> q
+map global normal '#' :comment-line<ret>
 
 hook global WinSetOption filetype=(c|cpp|h) %{
 	set window formatcmd 'clang-format'
