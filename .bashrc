@@ -118,3 +118,4 @@ fi
 
 export PATH=$HOME/.local/bin:$PATH
 alias config='/usr/bin/git --git-dir=$HOME/.myconf/ --work-tree=$HOME'
+alias configpush='config add . && config commit -m "Update" && config push'
