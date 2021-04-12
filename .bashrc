@@ -117,3 +117,4 @@ if ! shopt -oq posix; then
 fi
 
 export PATH=$HOME/.local/bin:$PATH
+alias config='/usr/bin/git --git-dir=$HOME/.myconf/ --work-tree=$HOME'

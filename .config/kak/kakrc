@@ -1,5 +1,6 @@
 colorscheme gruvbox
 set global tabstop     2
+
 set global indentwidth 2
 
 hook global RawKey <c-space> w
