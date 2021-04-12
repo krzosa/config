@@ -1,5 +1,6 @@
 *
 !.gitignore
+!session
 !dotinstall.sh
 !.bashrc
 !.config/kak/kakrc

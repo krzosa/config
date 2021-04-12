@@ -1,0 +1,9 @@
+session="work"
+tmux new-session -s $session -d 
+window=$(tmux new-window -t $session -P -F "#{pane_id}")
+compilation=$(tmux split-window -t $session:1 -h -P -F "#{pane_id}")
+tmux select-window -t $session:1
+tmux select-pane -t $session:1.1
+tmux bind b send-keys -t $compilation "build.sh" Enter \\\; swap-pane -t :1.2 -s $compilation \\\; select-pane -t :1.1 
+tmux bind B swap-pane -t :1.2 -s $window
+tmux a -t $session
