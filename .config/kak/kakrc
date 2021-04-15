@@ -1,20 +1,29 @@
 colorscheme gruvbox
 set global tabstop     2
-
 set global indentwidth 2
 
 hook global RawKey <c-space> w
 hook global NormalKey <c-q> q
 map global normal '#' :comment-line<ret>
+set global makecmd './build.sh'
 
-hook global WinSetOption filetype=(c|cpp|h) %{
-	set window formatcmd 'clang-format'
-  hook buffer BufWritePre .* %{format}
-  hook buffer BufWritePost .* %{
-    nop %sh{
-			tmux send-keys -t :1.2 "./build.sh" Enter
-		}
-  }
+def ide %{
+	rename-client main
+	set global jumpclient main
+
+	new rename-client tools
+	set global toolsclient tools
+	set global docsclient tools
+
+	hook global WinSetOption filetype=(c|cpp|h) %{
+		set window formatcmd 'clang-format'
+	  hook buffer BufWritePre .* %{format}
+	  hook buffer BufWritePost .* %{
+  	  make
+	  }
+	}
 }
 
-
+def run %{
+	tmux-terminal-window './run.sh'
+}
