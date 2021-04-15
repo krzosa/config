@@ -2,7 +2,8 @@ colorscheme gruvbox
 set global tabstop     2
 set global indentwidth 2
 
-hook global RawKey <c-space> w
+add-highlighter global/ number-lines -relative
+hook global NormalKey <c-space> w
 hook global NormalKey <c-q> q
 map global normal '#' :comment-line<ret>
 set global makecmd './build.sh'
@@ -16,9 +17,9 @@ def ide %{
 	set global docsclient tools
 
 	hook global WinSetOption filetype=(c|cpp|h) %{
-		set window formatcmd 'clang-format'
-	  hook buffer BufWritePre .* %{format}
-	  hook buffer BufWritePost .* %{
+		set global formatcmd 'clang-format'
+	  hook global BufWritePre .* %{format}
+	  hook global BufWritePost .* %{
   	  make
 	  }
 	}
@@ -28,6 +29,7 @@ def run %{
 	tmux-terminal-window './run.sh'
 }
 
+hook global NormalKey <c-r> run
 hook global BufCreate (.*/)?(\.kakrc\.local) %{
       set-option buffer filetype kak
 }
