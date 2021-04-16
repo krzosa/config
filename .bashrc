@@ -120,3 +120,8 @@ export PATH=$HOME/.local/bin:$PATH
 alias config='/usr/bin/git --git-dir=$HOME/.myconf/ --work-tree=$HOME'
 alias configpush='config add . && config commit -m "Update" && config push'
 alias py="python3"
+
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+pyenv activate acapy1

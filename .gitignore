@@ -3,6 +3,5 @@
 !session
 !dotinstall.sh
 !.bashrc
-!.config/kak/kakrc
 !.tmux.conf
 !scratch.md
