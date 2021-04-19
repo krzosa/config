@@ -1,0 +1,183 @@
+# set modifier
+set $super Mod4
+set $alt Mod1
+set $terminal i3-sensible-terminal
+
+# set font
+font pango: Cascadia Mono 8
+
+# Use Mouse+$super to drag floating windows to their wanted position
+floating_modifier $super
+
+
+#autostart
+exec --no-startup-id hsetroot -center ~/.wallpaper.png
+exec --no-startup-id xsettingsd &
+exec --no-startup-id compton -b
+exec blueman-manager
+
+# start a terminal
+bindsym $super+Return exec $terminal
+# start dmenu (a program launcher)
+bindsym $super+Shift+d exec i3-dmenu-desktop --dmenu="dmenu -i -fn 'Cascadia Mono:size=8'"
+bindsym $super+d exec rofi -lines 12 -padding 18 -width 60 -location 0 -show drun -sidebar-mode -columns 3 -font 'Cascadia Mono 8'
+
+# common apps keybinds
+bindsym Print exec scrot 'Cheese_%a-%d%b%y_%H.%M.png' -e 'viewnior ~/$f'
+bindsym $super+F4 exec i3lock -i ~/.wallpaper.png
+bindsym $super+Shift+w exec firefox
+bindsym $super+Shift+f exec thunar;workspace 3;focus
+bindsym $super+Shift+g exec geany
+
+#change volume
+bindsym XF86AudioRaiseVolume exec amixer -q set Master 5%+
+bindsym XF86AudioLowerVolume exec amixer -q set Master 5%-
+bindsym XF86AudioMute exec amixer set Master toggle
+
+# music control
+bindsym XF86AudioNext exec mpc next
+bindsym XF86AudioPrev exec mpc prev
+bindsym XF86AudioPlay exec mpc toggle
+bindsym XF86AudioStop exec mpc stop
+
+# kill focused window
+bindsym $alt+F4 kill
+bindsym $super+Shift+q kill
+
+# enter fullscreen mode for the focused container
+bindsym $super+f fullscreen toggle
+
+# toggle tiling / floating
+bindsym $super+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $super+Shift+space focus mode_toggle
+
+# switch to workspace
+bindsym $super+l workspace next
+bindsym $super+h workspace prev
+bindsym	$alt+Tab workspace back_and_forth
+
+# change focus
+bindsym Control+h focus left
+bindsym Control+j focus down
+bindsym Control+k focus up
+bindsym Control+l focus right
+
+bindsym Control+1 workspace 1
+bindsym Control+2 workspace 2
+bindsym Control+3 workspace 3
+bindsym Control+4 workspace 4
+bindsym Control+5 workspace 5
+bindsym Control+6 workspace 6
+bindsym Control+7 workspace 7
+bindsym Control+8 workspace 8
+bindsym Control+9 workspace 9
+bindsym Control+0 workspace 0
+
+# move focused container to workspace
+bindsym Control+Shift+1 move container to workspace 1
+bindsym Control+Shift+2 move container to workspace 2
+bindsym Control+Shift+3 move container to workspace 3
+bindsym Control+Shift+4 move container to workspace 4
+bindsym Control+Shift+5 move container to workspace 5
+bindsym Control+Shift+6 move container to workspace 6
+bindsym Control+Shift+7 move container to workspace 7
+bindsym Control+Shift+8 move container to workspace 8
+bindsym Control+Shift+9 move container to workspace 9
+bindsym Control+Shift+0 move container to workspace 0
+
+bindsym $super+m move scratchpad
+bindsym $super+z scratchpad show
+bindsym $super+Shift+v split v
+bindsym $super+v split h
+
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $super+Shift+r restart
+bindsym $super+F12 exec $terminal --command kak ~/.config/kak/kakrc
+
+# exit i3
+bindsym $super+Shift+F4 exec "i3-nagbar -t warning -m 'Really, exit?' -b 'Yes' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "layout" {
+        bindsym h resize shrink width 5 px or 5 ppt
+        bindsym j resize grow height 5 px or 5 ppt
+        bindsym k resize shrink height 5 px or 5 ppt
+        bindsym l resize grow width 5 px or 5 ppt
+
+        bindsym Control+h focus left
+        bindsym Control+j focus down
+        bindsym Control+k focus up
+        bindsym Control+l focus right
+
+        # move focused window
+        bindsym u move left
+        bindsym i move down
+        bindsym o move up
+        bindsym p move right
+
+				bindsym q split v
+				bindsym w split h
+        bindsym e layout toggle all
+        bindsym c exec $terminal
+        bindsym x kill
+
+        bindsym $super+a mode "default"
+        bindsym Escape mode "default"
+}
+bindsym $super+a mode "layout"
+
+mode "turnoff_binds" {
+   bindsym $super+i mode "default"
+}
+bindsym $super+i mode "turnoff_binds"
+
+# panel
+bar {
+        colors {
+        background #2f343f
+        statusline #2f343f
+        separator #4b5262
+
+        # colour of border, background, and text
+        focused_workspace       #2f343f #bf616a #d8dee8
+        active_workspace        #2f343f #2f343f #d8dee8
+        inactive_workspace      #2f343f #2f343f #d8dee8
+        urgent_workspacei       #2f343f #ebcb8b #2f343f
+    }
+        status_command i3status
+        mode hide
+        hidden_state hide
+        modifier $super
+}
+
+# window rules, you can find the window class using xprop
+for_window [class=".*"] border pixel 1
+assign [class=Firefox] 2
+assign [class=Thunar|File-roller] 3
+assign [class=Geany|Evince|Gucharmap|Soffice|libreoffice*] 4
+assign [class=Audacity|Vlc|mpv|Ghb|Xfburn|Gimp*|Inkscape] 5
+assign [class=Lxappearance|System-config-printer.py|Lxtask|GParted|Pavucontrol|Exo-helper*|Lxrandr|Arandr] 6
+assign [class=Transmission-gtk] 7
+for_window [class=Viewnior|feh|Audacious|File-roller|Lxappearance|Lxtask|Pavucontrol] floating enable
+
+
+for_window [title="__scratchpad"] move scratchpad
+for_window [title="__scratchpad"] resize set 1600 900 px
+for_window [title="__scratchpad"] move absolute position center
+
+bindsym $super+F11 exec --no-startup-id $terminal --title __scratchpad
+bindsym F2 exec xdotool type --window $(xdotool search --name __scratchpad) "$(printf './run.sh\n\e ')" && i3-msg scratchpad show
+
+# for_window [class=URxvt|Firefox|Geany|Evince|Soffice|libreoffice*|mpv|Ghb|Xfburn|Gimp*|Inkscape|Vlc|Lxappearance|Audacity] focus
+# for_window [class=Xfburn|GParted|System-config-printer.py|Lxtask|Pavucontrol|Exo-helper*|Lxrandr|Arandr] focus
+
+# colour of border, background, text, indicator, and child_border
+client.focused              #bf616a #2f343f #d8dee8 #bf616a #d8dee8
+client.focused_inactive     #2f343f #2f343f #d8dee8 #2f343f #2f343f
+client.unfocused            #2f343f #2f343f #d8dee8 #2f343f #2f343f
+client.urgent               #2f343f #2f343f #d8dee8 #2f343f #2f343f
+client.placeholder          #2f343f #2f343f #d8dee8 #2f343f #2f343f
+client.background           #2f343f
