@@ -1,7 +1,6 @@
 colorscheme gruvbox
 set global tabstop     2
 set global indentwidth 2
-
 add-highlighter global/ number-lines -relative
 hook global NormalKey <F1> save
 hook global NormalKey <c-q> q
@@ -27,8 +26,7 @@ hook global WinSetOption filetype=(c|cpp|h) %{
 	set buffer formatcmd 'clang-format'
 }
 
-
-def test %{
+hook global BufOpenFile .*/test.*[.](c|cpp|h) %{
   set buffer makecmd './test.sh'
 }
 
@@ -36,7 +34,6 @@ def run %{
   terminal 'run.sh'
 }
 
-hook global NormalKey <c-r> run
 hook global BufCreate (.*/)?(\.kakrc\.local) %{
       set-option buffer filetype kak
 }
