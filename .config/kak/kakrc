@@ -3,7 +3,7 @@ set global tabstop     2
 set global indentwidth 2
 
 add-highlighter global/ number-lines -relative
-hook global NormalKey <c-space> w
+hook global NormalKey <F1> save
 hook global NormalKey <c-q> q
 map global normal '#' :comment-line<ret>
 set global makecmd './build.sh'
@@ -11,26 +11,29 @@ set global makecmd './build.sh'
 def ide %{
 	rename-client main
 	set global jumpclient main
-
 	new rename-client tools
 	set global toolsclient tools
-	set global docsclient tools
-
-	hook global WinSetOption filetype=(c|cpp|h) %{
-		set global formatcmd 'clang-format'
-	  hook global BufWritePre .* %{format}
-	  hook global BufWritePost .* %{
-  	  make
-	  }
-	}
+	new rename-client docs
+	set global docsclient docs
 }
+
+def save %{
+	format
+	w
+	make
+}
+
+hook global WinSetOption filetype=(c|cpp|h) %{
+	set buffer formatcmd 'clang-format'
+}
+
 
 def test %{
   set buffer makecmd './test.sh'
 }
 
 def run %{
-	tmux-terminal-window './run.sh'
+  terminal 'run.sh'
 }
 
 hook global NormalKey <c-r> run

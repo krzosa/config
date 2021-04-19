@@ -5,3 +5,5 @@
 !.bashrc
 !.tmux.conf
 !scratch.md
+!.path/
+!.path/*

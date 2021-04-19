@@ -116,12 +116,19 @@ if ! shopt -oq posix; then
   fi
 fi
 
+####################################################################
+
 export PATH=$HOME/.local/bin:$PATH
+export PATH=$HOME/.path/:$PATH
 alias config='/usr/bin/git --git-dir=$HOME/.myconf/ --work-tree=$HOME'
 alias configpush='config add . && config commit -m "Update" && config push'
 alias py="python3"
 
-export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-pyenv activate acapy1
+if [ -n "$HOME/.pyenv/bin/pyenv" ]; then
+  export PATH="$HOME/.pyenv/bin:$PATH"
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+  pyenv activate acapy1
+fi
+
+source "$HOME/.cargo/env"
