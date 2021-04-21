@@ -1,6 +1,7 @@
 import sys
 import subprocess
 
+# python repl.py ${file}
 
 def module(path, modules):
     for i in modules:
@@ -14,6 +15,7 @@ def module(path, modules):
     return [False, path, None]
 
 
+		
 def print_std(out):
     err = out.stderr.decode("utf-8")
     out = out.stdout.decode("utf-8")
@@ -28,20 +30,39 @@ out = None
 f = sys.argv[1].split("/")
 file = f[-1]
 print(file)
+
+
+cwd = None
+process_args = None
 if file.startswith("test"):
     if file.endswith(".js"):
-        cwd = "/".join(f[:-2])
-        out = subprocess.run(["npm", "test", "--", sys.argv[1]], cwd=cwd, capture_output=True)
+      cwd = "/".join(f[:-2])
+      process_args = ["npm", "test", "--", sys.argv[1]]
     else:
-        pytest = sys.executable[: sys.executable.index("/python")] + "/pytest"
-        out = subprocess.run([pytest, "--no-cov", sys.argv[1]], capture_output=True)
+      pytest = sys.executable[: sys.executable.index("/python")] + "/pytest"
+      process_args = [pytest, "--no-cov", sys.argv[1]]
 else:
     success, result, index = module(sys.argv[1], ["aries_cloudagent/", "services/"])
     if success:
-        out = subprocess.run(
-            [sys.executable, "-m", result], capture_output=True, cwd=sys.argv[1][:index]
-        )
+      process_args = [sys.executable, "-m", result]
+      cwd = sys.argv[1][:index]
     else:
-        out = subprocess.run([sys.executable, result], capture_output=True)
+      process_args = [sys.executable, result]
 
+out = subprocess.run(process_args, cwd=cwd, capture_output=True)
 print_std(out)
+
+# for c in iter(lambda: process.stdout.read(1), b''):
+#           sys.stdout.buffer.write(c)
+#                   f.buffer.write(c)
+# out = Popen(process_args, cwd=cwd, stdout=PIPE)
+# queue = Queue()
+# thread = Thread(target=enqueue_output, args=(out.stdout, queue))
+# thread.deamon = True
+# thread.start()
+
+# try:  line = queue.get_nowait() # or q.get(timeout=.1)
+# except Empty:
+#   pass
+# else:
+#   print(line)
