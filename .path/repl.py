@@ -1,7 +1,15 @@
 import sys
 import subprocess
 
-# python repl.py ${file}
+"""
+python repl.py ${file}
+
+This script runs the passed file either as a:
+* test with pytest
+* js test with npm test
+* standalone python script
+* and most importantly as a standalone module of a bigger project
+"""
 
 def module(path, modules):
     for i in modules:
@@ -51,6 +59,12 @@ else:
 
 out = subprocess.run(process_args, cwd=cwd, capture_output=True)
 print_std(out)
+
+# process = subprocess.Popen(process_args, cwd=cwd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+# for stdout_line in iter(process.stdout.readline, ""):
+#   print(stdout_line.decode('utf-8'))
+  
+# print("END")
 
 # for c in iter(lambda: process.stdout.read(1), b''):
 #           sys.stdout.buffer.write(c)

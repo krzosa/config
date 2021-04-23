@@ -2,8 +2,9 @@ colorscheme gruvbox
 set global tabstop     2
 set global indentwidth 2
 add-highlighter global/ number-lines -relative
-hook global NormalKey <F1> save
+hook global NormalKey <F1> save_build
 hook global NormalKey <c-q> q
+hook global NormalKey <c-w> save
 map global normal '#' :comment-line<ret>
 set global makecmd './build.sh'
 
@@ -16,33 +17,45 @@ def ide %{
 	set global docsclient docs
 }
 
-def save %{
+def save_build %{
 	format
 	w
 	make
+}
+
+def save %{
+  try %{format}
+  w
 }
 
 hook global RegisterModified '"' %{ nop %sh{
     printf %s "$kak_main_reg_dquote" | xsel --input --clipboard
 }}
 
-map global normal P '!xsel --output --clipboard<ret>'
-map global normal p '<a-!>xsel --output --clipboard<ret>'
+map global user P '!xsel --output --clipboard<ret>'
+map global user p '<a-!>xsel --output --clipboard<ret>'
 
 hook global WinSetOption filetype=(c|cpp|h) %{
 	set buffer formatcmd 'clang-format'
 }
 
-hook global BufOpenFile .*/test.*[.](c|cpp|h) %{
-  set buffer makecmd './test.sh'
+def dev %{
+  set global makecmd './build.sh'
 }
+
+def test %{
+  set global makecmd './test.sh'
+}
+
+# hook global BufOpenFile .*/test.*[.](c|cpp|h) %{
+# }
 
 def run %{
   terminal 'run.sh'
 }
 
 hook global BufCreate (.*/)?(\.kakrc\.local) %{
-      set-option buffer filetype kak
+  set-option buffer filetype kak
 }
 try %{ source .kakrc.local }
 source ~/.config/kak/find.kak
