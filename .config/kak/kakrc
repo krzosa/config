@@ -51,7 +51,7 @@ def test %{
 # }
 
 def run %{
-  terminal 'run.sh'
+  tmux-terminal-window 'run.sh'
 }
 
 hook global BufCreate (.*/)?(\.kakrc\.local) %{
