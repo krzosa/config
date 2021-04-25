@@ -1,4 +1,5 @@
-continue
+define c
+  continue
   refresh
 end
 
