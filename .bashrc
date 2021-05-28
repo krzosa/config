@@ -119,10 +119,11 @@ fi
 ####################################################################
 
 export PATH=$HOME/.local/bin:$PATH
-export PATH=$HOME/.path/:$PATH
+export PATH=$HOME/.path:$PATH
 alias config='/usr/bin/git --git-dir=$HOME/.myconf/ --work-tree=$HOME'
 alias configpush='config add . && config commit -m "Update" && config push'
 alias py="python3"
+alias al="alacritty --config-file $HOME/.config/alacritty/alacritty.yaml"
 
 if [ -d "$HOME/.pyenv" ]; then
   export PATH="$HOME/.pyenv/bin:$PATH"
