@@ -1,7 +1,6 @@
 colorscheme gruvbox
 set global tabstop     2
 set global indentwidth 2
-set global scrolloff 20,0
 add-highlighter global/ number-lines -relative
 hook global RawKey <F1> save_build
 hook global NormalKey <c-q> q
@@ -11,18 +10,18 @@ map global normal '#' :comment-line<ret>
 set global makecmd './build.sh'
 
 def ide %{
-	rename-client main
-	set global jumpclient main
-	new rename-client tools
-	set global toolsclient tools
-	new rename-client docs
-	set global docsclient docs
+    rename-client main
+    set global jumpclient main
+    new rename-client tools
+    set global toolsclient tools
+    new rename-client docs
+    set global docsclient docs
 }
 
 def save_build %{
-	try %{format}
-	w
-	make
+        try %{format}
+        w
+        make
 }
 
 def save %{
@@ -43,7 +42,7 @@ map global user P '!xsel --output --clipboard<ret>'
 map global user p '<a-!>xsel --output --clipboard<ret>'
 
 hook global WinSetOption filetype=(c|cpp|h) %{
-	set buffer formatcmd 'clang-format'
+        set buffer formatcmd 'clang-format'
 }
 
 def dev %{
