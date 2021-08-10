@@ -11,18 +11,18 @@ map global normal '#' :comment-line<ret>
 set global makecmd './build.sh'
 
 def ide %{
-    rename-client main
-    set global jumpclient main
-    new rename-client tools
-    set global toolsclient tools
-    new rename-client docs
-    set global docsclient docs
+  rename-client main
+  set global jumpclient main
+  new rename-client tools
+  set global toolsclient tools
+  new rename-client docs
+  set global docsclient docs
 }
 
 def save_build %{
-        try %{format}
-        w
-        make
+  try %{format}
+  w
+  make
 }
 
 def save %{
@@ -36,14 +36,14 @@ hook global InsertChar j %{ try %{
 }}
 
 hook global RegisterModified '"' %{ nop %sh{
-    printf %s "$kak_main_reg_dquote" | xsel --input --clipboard
+  printf %s "$kak_main_reg_dquote" | xsel --input --clipboard
 }}
 
 map global user P '!xsel --output --clipboard<ret>'
 map global user p '<a-!>xsel --output --clipboard<ret>'
 
 hook global WinSetOption filetype=(c|cpp|h) %{
-        set buffer formatcmd 'clang-format'
+  set buffer formatcmd 'clang-format'
 }
 
 def dev %{
