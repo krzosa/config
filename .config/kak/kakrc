@@ -1,6 +1,7 @@
 colorscheme gruvbox
 set global tabstop     2
 set global indentwidth 2
+set global scrolloff 20,0
 add-highlighter global/ number-lines -relative
 hook global NormalKey <F1> save_build
 hook global NormalKey <c-q> q
@@ -18,7 +19,7 @@ def ide %{
 }
 
 def save_build %{
-	format
+	try %{format}
 	w
 	make
 }
