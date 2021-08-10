@@ -1,6 +1,7 @@
 colorscheme gruvbox
 set global tabstop     2
 set global indentwidth 2
+map global insert <tab> '<space><space>'
 add-highlighter global/ number-lines -relative
 hook global RawKey <F1> save_build
 hook global NormalKey <c-q> q
