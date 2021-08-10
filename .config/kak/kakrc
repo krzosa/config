@@ -3,9 +3,10 @@ set global tabstop     2
 set global indentwidth 2
 set global scrolloff 20,0
 add-highlighter global/ number-lines -relative
-hook global NormalKey <F1> save_build
+hook global RawKey <F1> save_build
 hook global NormalKey <c-q> q
-hook global NormalKey <c-w> save
+hook global RawKey <c-w> save
+hook global NormalKey <c-e> make-next-error
 map global normal '#' :comment-line<ret>
 set global makecmd './build.sh'
 
@@ -28,6 +29,11 @@ def save %{
   try %{format}
   w
 }
+
+hook global InsertChar j %{ try %{
+  exec -draft hH <a-k>jj<ret> d
+  exec <esc>
+}}
 
 hook global RegisterModified '"' %{ nop %sh{
     printf %s "$kak_main_reg_dquote" | xsel --input --clipboard
