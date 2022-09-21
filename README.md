@@ -8,5 +8,5 @@ config fetch
 config checkout main
 ```
 
-sh_var=$(tmux split-window -P -F "#{pane_id}")
-tmux display -p -t %8 "a"
+<!-- sh_var=$(tmux split-window -P -F "#{pane_id}") -->
+<!-- tmux display -p -t %8 "a" -->
