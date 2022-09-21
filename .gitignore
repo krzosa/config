@@ -1,9 +1,9 @@
 *
+!README.md
 !.gitignore
 !session
 !dotinstall.sh
-!.bashrc
+!.bashrc_karol
 !.tmux.conf
-!scratch.md
 !.path/
 !.path/*
