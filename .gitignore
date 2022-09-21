@@ -1,8 +1,8 @@
 *
 !README.md
 !.gitignore
-!install.sh
+!_install_config.sh
 !.bashrc_karol
 !.tmux.conf
-!.path/
-!.path/*
+!bin/
+!bin/*
