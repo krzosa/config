@@ -1,7 +1,7 @@
 # set modifier
 set $super Mod4
 set $alt Mod1
-set $terminal i3-sensible-terminal 
+set $terminal i3-sensible-terminal
 
 # set font
 font pango: Cascadia Mono 8
@@ -11,13 +11,14 @@ floating_modifier $super
 
 #autostart
 exec --no-startup-id xsettingsd &
-exec --no-startup-id compton -b
+# exec --no-startup-id compton -b
 
 # start a terminal
 bindsym $super+Return exec $terminal
 # start dmenu (a program launcher)
 # bindsym $super+p exec ~/.path/rofi/main
-bindsym $super+Shift+d exec i3-dmenu-desktop --dmenu="dmenu -i -fn 'Cascadia Mono:size=8'"
+bindsym $super+Shift+d exec dmenu_run # --dmenu="dmenu -i -fn 'Cascadia Mono:size=8'"
+# bindsym $super+Shift+d exec i3-dmenu-desktop --dmenu="dmenu -i -fn 'Cascadia Mono:size=8'"
 # indsym $super+d exec rofi -lines 12 -padding 18 -width 60 -location 0 -show drun -sidebar-mode -columns 3 -font 'Cascadia Mono 8'
 
 # common apps keybinds
@@ -29,14 +30,8 @@ bindsym XF86AudioRaiseVolume exec amixer -q set Master 5%+
 bindsym XF86AudioLowerVolume exec amixer -q set Master 5%-
 bindsym XF86AudioMute exec amixer set Master toggle
 
-# music control
-bindsym XF86AudioNext exec mpc next
-bindsym XF86AudioPrev exec mpc prev
-bindsym XF86AudioPlay exec mpc toggle
-bindsym XF86AudioStop exec mpc stop
-
-bindsym XF86MonBrightnessUp exec --no-startup-id light -A 10 # increase screen brightness
-bindsym XF86MonBrightnessDown exec --no-startup-id light -U 10 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec --no-startup-id light -A 5 # increase screen brightness
+bindsym XF86MonBrightnessDown exec --no-startup-id light -U 5 # decrease screen brightness
 
 # kill focused window
 bindsym $alt+F4 kill
@@ -111,8 +106,7 @@ mode "layout" {
   bindsym p move right
 
 
-  bindsym F1 exec $terminal --command kak ~/.config/kak/kakrc ; mode "default"
-  bindsym F3 exec $terminal --command kak ~/.config/i3/config ; mode "default"
+  bindsym F1 exec subl ~/.config/i3/config ; mode "default"
   bindsym F12 restart
 
   bindsym r floating toggle
@@ -134,7 +128,7 @@ bindsym $super+i mode "turnoff_binds"
 
 # panel
 bar {
-  status_command i3status
+  status_command i3blocks
   mode hide
   hidden_state hide
   modifier $super
@@ -142,20 +136,18 @@ bar {
 
 # window rules, you can find the window class using xprop
 for_window [class=".*"] border pixel 1
-assign [class=Firefox] 2
-assign [class=Thunar|File-roller] 3
-assign [class=Geany|Evince|Gucharmap|Soffice|libreoffice*] 4
-assign [class=Audacity|Vlc|mpv|Ghb|Xfburn|Gimp*|Inkscape] 5
-assign [class=Lxappearance|System-config-printer.py|Lxtask|GParted|Pavucontrol|Exo-helper*|Lxrandr|Arandr] 6
-assign [class=Transmission-gtk|Slack] 9
+# assign [class=Firefox] 2
+# assign [class=Thunar|File-roller] 3
+# assign [class=Geany|Evince|Gucharmap|Soffice|libreoffice*] 4
+# assign [class=Audacity|Vlc|mpv|Ghb|Xfburn|Gimp*|Inkscape] 5
+# assign [class=Lxappearance|System-config-printer.py|Lxtask|GParted|Pavucontrol|Exo-helper*|Lxrandr|Arandr] 6
+# assign [class=Transmission-gtk|Slack] 9
 for_window [class=Viewnior|feh|Audacious|File-roller|Lxappearance|Lxtask|Pavucontrol] floating enable
 
-
-for_window [title="__output"] move workspace 0
-for_window [title="firefox"] move scratchpad
-for_window [title="firefox"] resize set 2600 1600 px
-for_window [title="firefox"] move absolute position center
-for_window [title="firefox"] scratchpad show
+for_window [title="Firefox"] move scratchpad
+for_window [title="Firefox"] resize set 2600 1600 px
+for_window [title="Firefox"] move absolute position center
+for_window [title="Firefox"] scratchpad show
 
 # for_window [class=URxvt|Firefox|Geany|Evince|Soffice|libreoffice*|mpv|Ghb|Xfburn|Gimp*|Inkscape|Vlc|Lxappearance|Audacity] focus
 # for_window [class=Xfburn|GParted|System-config-printer.py|Lxtask|Pavucontrol|Exo-helper*|Lxrandr|Arandr] focus
