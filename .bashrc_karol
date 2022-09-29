@@ -1,2 +1,4 @@
 
-cd ~/Programming
+
+export PATH="~/bin/:$PATH"
+# cd ~/Programming
